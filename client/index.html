@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>DAPP Tasks</title>
+    <title>DApp Tasks</title>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta
@@ -20,7 +20,7 @@
             <h1>DApp</h1>
             <h6 class="text-muted">Decentralized Task App</h6>
             <span>Waller</span>
-            <span>12312312312321</span>
+            <span id="account"></span>
           </div>
 
           <form class="card card-bpdy bg-dark rounded-0 mt-3 p-3" id="taskForm">
@@ -45,7 +45,11 @@
           </form>
         </div>
         <div class="col-md-8">
-          <div class="card bg-dark">tasklist</div>
+          <div class="card bg-dark p-3">
+            <h4>Task list</h4>
+          </div>
+          <hr />
+          <div id="taskList"></div>
         </div>
       </div>
     </div>

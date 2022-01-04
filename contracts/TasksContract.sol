@@ -31,6 +31,7 @@ contract TasksContract {
         uint256 createdAt; // la fecha es un timestamp, por lo que podemos poner uint256
     }
 
+    // Array de tareas mapeado a una estructura Task
     mapping(uint256 => Task) public tasks;
 
     function createTask(string memory _title, string memory _description)

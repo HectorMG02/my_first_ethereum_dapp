@@ -1,10 +1,11 @@
 const App = {
   contracts: {},
-  init: () => {
+  init: async () => {
     // funciones para interactuar con la blockchain, usando metamask (instalar en el navegador)
-    App.loadEthereum();
-    App.loadAccount();
-    App.loadContracts();
+    await App.loadEthereum();
+    await App.loadAccount();
+    await App.loadContracts();
+    await App.renderTasks();
   },
   loadEthereum: async () => {
     if (window.ethereum) {
@@ -25,6 +26,7 @@ const App = {
     });
 
     App.account = accounts[0];
+    App.renderAccount();
   },
   loadContracts: async () => {
     const res = await fetch("TasksContract.json");
@@ -35,6 +37,48 @@ const App = {
     App.contracts.tasksContract.setProvider(App.web3Provider);
 
     App.tasksContract = await App.contracts.tasksContract.deployed();
+  },
+  renderAccount: () => {
+    document.getElementById("account").innerHTML = App.account;
+  },
+  renderTasks: async () => {
+    let taskCount = await App.tasksContract.taskCount();
+    taskCount = Number(taskCount);
+    let html = "";
+    for (let i = 0; i < taskCount; i++) {
+      const task = await App.tasksContract.tasks(i);
+
+      const id = task[0];
+      const title = task[1];
+      const description = task[2];
+      const done = task[3];
+      const createdAt = task[4];
+
+      let taskElement = `
+        <div class="card bg-dark rounded-0 px-3 pt-3 my-3">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span>${title}</span>
+                <div class="form-check form-switch">
+                    <input type="checkbox" class="form-check-input" ${
+                      done ? "checked" : null
+                    } />
+                </div>
+            </div>
+            
+            
+            <div class="card-body">
+            <span>${description}</span>
+            <p class="text-muted mt-1">${new Date(
+              createdAt * 1000
+            ).toLocaleString()}</p>
+            </div>
+        </div>
+      `;
+
+      html += taskElement;
+    }
+
+    document.querySelector("#taskList").innerHTML = html;
   },
   createTask: async (name, description) => {
     const result = await App.tasksContract.createTask(name, description, {
