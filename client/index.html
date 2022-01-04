@@ -23,17 +23,21 @@
             <span>12312312312321</span>
           </div>
 
-          <form class="card card-bpdy bg-dark rounded-0 mt-3 p-3">
+          <form class="card card-bpdy bg-dark rounded-0 mt-3 p-3" id="taskForm">
             <h4>Create Task</h4>
             <input
               type="text"
               placeholder="Write a task"
+              name="name"
+              required
               class="form-control bg-dark text-white rounded-0 border-0 my-4"
             />
 
             <textarea
               class="form-control bg-dark text-white rounded-0 border-0 my-3"
               placeholder="Write a description"
+              name="description"
+              required
               rows="2"
             ></textarea>
 
@@ -49,5 +53,6 @@
     <!-- ponemos en el bs-config.json que accediendo a /libs, accedemos al node_modules -->
     <script src="./libs/@truffle/contract/dist/truffle-contract.min.js"></script>
     <script src="app.js"></script>
+    <script src="ui.js"></script>
   </body>
 </html>
