@@ -1,6 +1,0 @@
-{
-  "server": {
-    "baseDir": ["./client"]
-  },
-  "port": "3000"
-}
