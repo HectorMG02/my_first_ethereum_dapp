@@ -9,8 +9,19 @@ contract TasksContract {
     uint256 public taskCount = 0; // para poder acceder desde truffle console, tenemos que poner el public
 
     constructor() {
-        createTask("Default task", "tarea por defecto");
+        createTask("Default task", "Default description");
     }
+
+    // los eventos hacen alusion a algo que ya paso
+    event TaskCreated(
+        uint256 id,
+        string title,
+        string description,
+        bool done,
+        uint256 createdAt
+    );
+
+    event TaskToggleDone(uint256 id, bool done);
 
     struct Task {
         uint256 id;
@@ -25,6 +36,7 @@ contract TasksContract {
     function createTask(string memory _title, string memory _description)
         public
     {
+        taskCount++;
         tasks[1] = Task(
             taskCount,
             _title,
@@ -32,13 +44,22 @@ contract TasksContract {
             false,
             block.timestamp
         ); // con block, hacemos referencia al bloque donde se esta ejecutando el script
-        taskCount++;
+
+        // tras crear la tarea retorno la tarea creada
+        emit TaskCreated(
+            taskCount,
+            _title,
+            _description,
+            false,
+            block.timestamp
+        );
     }
 
     function toggleDone(uint256 _id) public {
         Task memory _task = tasks[_id];
         _task.done = !_task.done;
-
         tasks[_id] = _task;
+
+        emit TaskToggleDone(_id, _task.done);
     }
 }
