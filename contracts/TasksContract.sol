@@ -3,10 +3,14 @@ pragma solidity ^0.8.6; // hay que modificar la version en el truffle-config.js 
 
 // modificamos tambien en el truffle-config, el port y ponemos 7545, en este caso es el del servidor ganache, tenemos que descomentar la parte de development dentro de este config
 // creamos la carpeta build con truffle build
-// hacemos el deploy con truffle deploy truffle migrate, ambos hacen lo mismo
+// hacemos el deploy con truffle deploy
 
 contract TasksContract {
-    uint256 taskCount = 0; // para poder acceder desde truffle console, tenemos que poner el public
+    uint256 public taskCount = 0; // para poder acceder desde truffle console, tenemos que poner el public
+
+    constructor() {
+        createTask("Default task", "tarea por defecto");
+    }
 
     struct Task {
         uint256 id;
@@ -31,5 +35,10 @@ contract TasksContract {
         taskCount++;
     }
 
-    function toggleDone() public {}
+    function toggleDone(uint256 _id) public {
+        Task memory _task = tasks[_id];
+        _task.done = !_task.done;
+
+        tasks[_id] = _task;
+    }
 }
