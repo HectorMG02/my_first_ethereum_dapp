@@ -45,8 +45,10 @@ const App = {
     let taskCount = await App.tasksContract.taskCount();
     taskCount = Number(taskCount);
     let html = "";
+
     for (let i = 0; i < taskCount; i++) {
       const task = await App.tasksContract.tasks(i);
+      console.log(task);
 
       const id = task[0];
       const title = task[1];
@@ -81,9 +83,11 @@ const App = {
     document.querySelector("#taskList").innerHTML = html;
   },
   createTask: async (name, description) => {
-    const result = await App.tasksContract.createTask(name, description, {
+    await App.tasksContract.createTask(name, description, {
       from: App.account, // el from es para decir que cuenta esta cambiando los datos
     });
+
+    location.reload();
   },
   toggleDone: async (element) => {
     const id = element.dataset.id;

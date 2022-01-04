@@ -38,7 +38,7 @@ contract TasksContract {
         public
     {
         taskCount++;
-        tasks[1] = Task(
+        tasks[taskCount] = Task(
             taskCount,
             _title,
             _description,
