@@ -61,7 +61,7 @@ const App = {
                 <div class="form-check form-switch">
                     <input type="checkbox" class="form-check-input" ${
                       done ? "checked" : null
-                    } />
+                    } data-id="${id}" onchange="App.toggleDone(this)" />
                 </div>
             </div>
             
@@ -82,10 +82,15 @@ const App = {
   },
   createTask: async (name, description) => {
     const result = await App.tasksContract.createTask(name, description, {
+      from: App.account, // el from es para decir que cuenta esta cambiando los datos
+    });
+  },
+  toggleDone: async (element) => {
+    const id = element.dataset.id;
+
+    await App.tasksContract.toggleDone(id, {
       from: App.account,
     });
-
-    console.log(result.logs[0].args);
   },
 };
 
