@@ -1,6 +1,6 @@
 {
   "server": {
-    "baseDir": ["./client"],
+    "baseDir": ["./client", "./build/contracts"],
     "routes": {
       "/libs": "./node_modules"
     }
