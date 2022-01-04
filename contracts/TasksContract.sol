@@ -28,7 +28,7 @@ contract TasksContract {
         string title;
         string description;
         bool done;
-        uint256 createdAt; // la fecha es un timestamp, por lo que ponemos el uint256
+        uint256 createdAt; // la fecha es un timestamp, por lo que podemos poner uint256
     }
 
     mapping(uint256 => Task) public tasks;
